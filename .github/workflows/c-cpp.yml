@@ -17,3 +17,8 @@ jobs:
       run: sudo apt install build-essential mingw-w64
     - name: make
       run: make CROSS=i686-w64-mingw32-
+    - name: upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: exe
+        path: EJ2Esc.exe
