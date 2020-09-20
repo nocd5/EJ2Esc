@@ -1,5 +1,5 @@
 /* For compile with MinGW */
-ENTRY(WinMainCRTStartup)
+/* ENTRY(WinMainCRTStartup) */
 /* For cross compile with mingw-w64 on Ubuntu */
 ENTRY(_WinMainCRTStartup)
 SECTIONS {
