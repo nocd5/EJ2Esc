@@ -2,7 +2,7 @@
 
 Replace E/J(半角/全角) key to Escape key, and disable CapsLock
 
-## Detals
+## Details
 
 Replace E/J(半角/全角) key to Escape key using RegisterHotkey API  
 except with Alt- modifier key.
