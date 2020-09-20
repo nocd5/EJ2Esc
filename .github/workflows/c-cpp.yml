@@ -20,5 +20,5 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v2
       with:
-        name: exe
+        name: EJ2Esc_${{ github.sha }}
         path: EJ2Esc.exe
