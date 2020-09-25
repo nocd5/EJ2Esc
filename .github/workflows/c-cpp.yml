@@ -8,20 +8,18 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-    - name: setup
+    - name: Setup
       run: sudo apt install build-essential mingw-w64
-    - name: setvar
-      id: vars
+    - name: Set Vars
+      id: set_vars
       run: echo "::set-output name=github_sha7::$(git rev-parse --short=7 ${{ github.sha }})"
     - name: make
       run: make CROSS=i686-w64-mingw32-
     - name: upload
       uses: actions/upload-artifact@v2
       with:
-        name: EJ2Esc_${{ steps.vars.outputs.github_sha7 }}
+        name: EJ2Esc_${{ steps.set_vars.outputs.github_sha7 }}
         path: EJ2Esc.exe
