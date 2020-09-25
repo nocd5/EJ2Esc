@@ -7,9 +7,7 @@ Replace E/J(半角/全角) key to Escape key, and disable CapsLock
 Replace E/J(半角/全角) key to Escape key using RegisterHotkey API  
 except with Alt- modifier key.
 
-Additionally, disable CapsLock using a timer.  
-The timer checks CapsLock state per 1 second,
-and turns off if it's on.
+Additionally, disable CapsLock using Low Level Keyboard Hook.
 
 ### Why I make it
 

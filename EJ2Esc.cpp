@@ -4,11 +4,12 @@
 
 #define HKID_OEM_AUTO 0x10
 #define HKID_OEM_ENLW 0x20
-#define TMID_CAPITAL  2
 
 #ifdef __cplusplus
 extern "C" int WinMainCRTStartup();
 #endif
+
+HHOOK gHook;
 
 void SendKey(UINT vk) {
     INPUT input[2] = {0};
@@ -18,6 +19,20 @@ void SendKey(UINT vk) {
     input[1].ki.wVk = vk;
     input[1].ki.dwFlags = KEYEVENTF_KEYUP;
     SendInput(2, input, sizeof(INPUT));
+}
+
+LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
+    if (nCode >= 0) {
+        PKBDLLHOOKSTRUCT pklh = (PKBDLLHOOKSTRUCT)lParam;
+        switch (pklh->vkCode) {
+            case VK_CAPITAL:
+            case VK_OEM_ATTN:
+                return 1;
+            default:
+                break;
+        }
+    }
+    return CallNextHookEx(gHook, nCode, wParam, lParam);
 }
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
@@ -46,17 +61,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
                 RegisterHotKey(hwnd, HKID_OEM_AUTO | m, m, VK_OEM_AUTO);
                 RegisterHotKey(hwnd, HKID_OEM_ENLW | m, m, VK_OEM_ENLW);
             }
-            // Set Timer for disable CapsLock
-            SetTimer(hwnd, TMID_CAPITAL, 1000, NULL);
-            break;
-
-        case WM_TIMER:
-            switch (wparam) {
-                case TMID_CAPITAL:
-                    if (GetKeyState(VK_CAPITAL) & 0x0001) {
-                        SendKey(VK_CAPITAL);
-                    }
-                    break;
+            // Set Low Level Keyboard Hook
+            gHook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, NULL, 0);
+            if (!gHook) {
+                PostQuitMessage(0);
             }
             break;
 
