@@ -26,7 +26,6 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
         PKBDLLHOOKSTRUCT pklh = (PKBDLLHOOKSTRUCT)lParam;
         switch (pklh->vkCode) {
             case VK_CAPITAL:
-            case VK_OEM_ATTN:
                 return 1;
             default:
                 break;
