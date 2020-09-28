@@ -1,7 +1,5 @@
 # EJ2Esc
 
-![C/C++ CI](https://github.com/nocd5/EJ2Esc/workflows/C/C++%20CI/badge.svg)
-
 Replace E/J(半角/全角) key to Escape key, and disable CapsLock
 
 ## Details
